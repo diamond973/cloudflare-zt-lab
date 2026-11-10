@@ -1,0 +1,5 @@
+account_id   = "0123456789abcdef0123456789abcdef"
+zone_id      = "0123456789abcdef0123456789abcdef"
+domain       = "example.com"
+admin_email  = "you@example.com"
+private_cidr = "10.20.0.0/24"

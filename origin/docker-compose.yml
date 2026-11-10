@@ -1,0 +1,21 @@
+# Origin VM: two nginx apps and cloudflared. Nothing listens on a public port.
+services:
+  app:
+    image: nginx:1.27-alpine
+    volumes:
+      - ./app:/usr/share/nginx/html:ro
+    restart: unless-stopped
+
+  internal:
+    image: nginx:1.27-alpine
+    volumes:
+      - ./internal:/usr/share/nginx/html:ro
+    restart: unless-stopped
+
+  cloudflared:
+    image: cloudflare/cloudflared:latest
+    command: tunnel --no-autoupdate run
+    environment:
+      - TUNNEL_TOKEN=${TUNNEL_TOKEN}
+    depends_on: [app, internal]
+    restart: unless-stopped
